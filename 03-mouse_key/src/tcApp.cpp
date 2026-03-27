@@ -71,7 +71,7 @@ void tcApp::keyPressed(int key) {
     if (key == SAPP_KEYCODE_DOWN) brushSize = max(brushSize - 2.0f, 2.0f);
 
     // --- clear ---
-    // TrussC では大文字でハンドリングします
+    // TrussC에서는 대문자로 핸들링해
     if (key == 'C') trail.clear();
 }
 void tcApp::keyReleased(int key) {}
@@ -93,14 +93,14 @@ void tcApp::mouseDragged(Vec2 pos, int button) {
     trail.push_back({pos, brushColor, brushSize});
 
     // =========================================================
-    // チャレンジ:
-    //   ドラッグの軌跡が虹色に変化するようにしてみよう
-    //   ヒント:
-    //   - setColorHSB(hue, sat, bri) で色相を指定できる
-    //   - trail.size() を使えば「何番目の点か」がわかる
-    //   - hue = fmod(trail.size() * 0.01f, 1.0f) とかで
-    //     描くたびに色相がずれていく
-    //   - brushColor の代わりに計算した色を Point に入れる
+    // 챌린지:
+    //   드래그 궤적이 무지개색으로 변하게 만들어보자
+    //   힌트:
+    //   - setColorHSB(hue, sat, bri)로 색상을 지정할 수 있어
+    //   - trail.size()를 사용하면 "몇 번째 점인지" 알 수 있어
+    //   - hue = fmod(trail.size() * 0.01f, 1.0f) 같은 식으로
+    //     그릴 때마다 색상이 조금씩 변해감
+    //   - brushColor 대신 계산한 색을 Point에 넣으면 돼
     // =========================================================
 }
 void tcApp::mouseScrolled(Vec2 delta) {

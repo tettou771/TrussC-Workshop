@@ -1,15 +1,15 @@
 #include "tcApp.h"
 
 void tcApp::setup() {
-    // --- beep(): built-in debug sounds ---
+    // --- beep(): 내장 디버그 사운드 ---
     // beep()              default ping
     // beep(Beep::success) preset sounds
     // No setup needed, just call it in keyPressed!
 
-    // --- ChipSound: build your own sound ---
-    // ChipSoundNote defines a single tone
-    // ChipSoundBundle combines multiple notes
-    // .build() turns it into a playable Sound
+    // --- ChipSound: 직접 사운드 만들기 ---
+    // ChipSoundNote는 하나의 톤을 정의
+    // ChipSoundBundle은 여러 노트를 조합
+    // .build()로 재생 가능한 Sound로 변환
 
     // Jump: rising tones
     {
@@ -63,21 +63,21 @@ void tcApp::setup() {
     }
 
     // =========================================================
-    // チャレンジ:
-    //   新しいキー (A など) に、自分だけの ChipSound を作ろう！
+    // 챌린지:
+    //   새로운 키 (A 등)에 나만의 ChipSound를 만들어보자!
     //
-    //   ここに追加:
+    //   여기에 추가:
     //     ChipSoundNote n;
-    //     n.wave = Wave::Triangle;  // 波形を選ぶ
-    //     n.hz = 440.0f;            // 音の高さ
-    //     n.duration = 0.2f;        // 長さ
-    //     n.volume = 0.3f;          // 音量
-    //     mySound = n.build();      // Sound にする
+    //     n.wave = Wave::Triangle;  // 파형 선택
+    //     n.hz = 440.0f;            // 음 높이
+    //     n.duration = 0.2f;        // 길이
+    //     n.volume = 0.3f;          // 음량
+    //     mySound = n.build();      // Sound로 변환
     //
-    //   keyPressed() に追加:
+    //   keyPressed()에 추가:
     //     case 'A': mySound.play(); break;
     //
-    //   tcApp.h にも Sound mySound; を追加するのを忘れずに
+    //   tcApp.h에도 Sound mySound; 추가하는 거 잊지 말고
     // =========================================================
 }
 

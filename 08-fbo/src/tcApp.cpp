@@ -1,16 +1,16 @@
 #include "tcApp.h"
 
 void tcApp::setup() {
-    // --- Fbo = offscreen canvas ---
-    // allocate(w, h) で描画用テクスチャを作る
-    // begin() / end() の間に描いた内容がテクスチャになる
+    // --- Fbo = 오프스크린 캔버스 ---
+    // allocate(w, h)로 그리기용 텍스처를 만듦
+    // begin() / end() 사이에 그린 내용이 텍스처가 됨
     int samples = 4;
     TextureFormat format = TextureFormat::RGBA32F;
     trailFbo.allocate(960, 600, samples, format);
     trailFbo.begin(0, 0, 0, 1);
     trailFbo.end();
 
-    // --- stamp: setup で一度だけ描いて、何度でも使えるパターン ---
+    // --- stamp: setup에서 한 번만 그려두면 몇 번이든 쓸 수 있는 패턴 ---
     stampFbo.allocate(100, 100);
     stampFbo.begin(0, 0, 0, 0); // transparent background
     int n = 6;
@@ -31,7 +31,7 @@ void tcApp::update() {
 void tcApp::draw() {
     clear(0.12f);
 
-    // --- trail: begin() preserves previous content ---
+    // --- trail: begin()은 이전 내용을 유지함 ---
     trailFbo.begin();
 
     // fade previous content
@@ -58,14 +58,14 @@ void tcApp::draw() {
     drawBitmapString("[c] clear trail", 20, 580);
 
     // =========================================================
-    // チャレンジ:
-    //   クリックした場所に stampFbo をスタンプとして押してみよう
-    //   trailFbo の中に描けば、残像つきで残る！
+    // 챌린지:
+    //   클릭한 곳에 stampFbo를 스탬프처럼 찍어보자
+    //   trailFbo 안에 그리면 잔상과 함께 남아!
     //
-    //   ヒント
-    //   mousePressed() で trailFboをbegin,endで囲んで、stampFboを描く
+    //   힌트
+    //   mousePressed()에서 trailFbo를 begin, end로 감싸고 stampFbo를 그림
     //
-    //   スタンプが残像でゆっくり消えていく
+    //   스탬프가 잔상으로 천천히 사라지는 게 보일 거야
     // =========================================================
 }
 

@@ -1,21 +1,21 @@
 #include "tcApp.h"
 
 void tcApp::setup() {
-    // --- RectNode: UI building block ---
-    // RectNode = rectangle with position, size, rotation
-    // addChild() creates parent-child relationship
-    // Children use LOCAL coordinates (0,0 = parent's top-left)
-    // When parent moves, children follow automatically
+    // --- RectNode: UI 구성 요소 ---
+    // RectNode = 위치, 크기, 회전을 가진 사각형
+    // addChild()로 부모-자식 관계를 만듦
+    // 자식은 로컬 좌표를 사용 (0,0 = 부모의 좌상단)
+    // 부모가 움직이면 자식도 자동으로 따라옴
 
-    // --- panel (parent) ---
+    // --- 패널 (부모) ---
     panel = make_shared<RectNode>();
     panel->enableEvents();
     panel->setPos(180, 120);
     panel->setSize(600, 350);
     addChild(panel);
 
-    // --- boxes (children of panel) ---
-    // position is relative to panel, not to screen!
+    // --- 박스 (패널의 자식) ---
+    // 위치는 화면이 아닌 패널 기준의 상대 좌표!
     box1 = make_shared<ClickBox>(Color(0.5f, 0.2f, 0.2f));
     box1->setPos(30, 80);
     panel->addChild(box1);
@@ -35,12 +35,12 @@ void tcApp::update() {
 void tcApp::draw() {
     clear(0.12f);
 
-    // --- draw panel background ---
-    // Node children are drawn automatically by TrussC.
-    // But we draw the panel background here in the app's draw,
-    // because RectNode itself is invisible (just a container).
-    // The panel's draw could be overridden too, but for simplicity
-    // we draw it from the app using the panel's position/size.
+    // --- 패널 배경 그리기 ---
+    // Node의 자식은 TrussC가 자동으로 그려줌.
+    // 하지만 패널 배경은 여기 app의 draw에서 그림.
+    // RectNode 자체는 보이지 않으니까 (그냥 컨테이너).
+    // 패널의 draw를 오버라이드할 수도 있지만, 간단하게
+    // 패널의 위치/크기를 가져와서 앱에서 그리는 방식.
 
     // panel background
     float px = panel->getPos().x;
@@ -73,17 +73,17 @@ void tcApp::draw() {
     drawBitmapString("Move panel with arrow keys -> boxes follow!", 20, 80);
 
     // =========================================================
-    // チャレンジ:
-    //   box の下に、もう1段 子ボックスを追加してみよう
-    //   - 新しい ClickBox を作る
-    //   - box1->addChild(newBox) で box1 の子にする
-    //   - setPos は box1 の中でのローカル座標
-    //   - box1 が動けば newBox もついてくる
+    // 챌린지:
+    //   box 아래에 자식 박스를 하나 더 추가해보자
+    //   - 새로운 ClickBox를 만들고
+    //   - box1->addChild(newBox)로 box1의 자식으로 설정
+    //   - setPos는 box1 안에서의 로컬 좌표
+    //   - box1이 움직이면 newBox도 따라옴
     //
-    //   さらに: 2つ目のパネルを作ってみよう
+    //   추가로: 두 번째 패널을 만들어보자
     //   - panel2 = make_shared<RectNode>()
-    //   - addChild(panel2) で app に追加
-    //   - 別の位置に新しいボックスを配置
+    //   - addChild(panel2)로 app에 추가
+    //   - 다른 위치에 새로운 박스를 배치
     // =========================================================
 
     setColor(0.4f);
