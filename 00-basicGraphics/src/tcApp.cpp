@@ -11,31 +11,31 @@ void tcApp::update() {
 void tcApp::draw() {
     clear(0.12f);
 
-    // --- 基本図形 ---
+    // --- basic shapes ---
 
     setColor(0.1f, 0.4f, 0.9f);
-    drawCircle(120, 150, 60); // 円 (x, y, r)
-    drawRect(250, 90, 120, 120); // 四角形 (x, y, w, h)
-    drawLine(450, 90, 570, 210); // 線 (x1, y1, x2, y2)
+    drawCircle(120, 150, 60); // circle (x, y, r)
+    drawRect(250, 90, 120, 120); // rectangle (x, y, w, h)
+    drawLine(450, 90, 570, 210); // line (x1, y1, x2, y2)
 
-    // 三角形 (x1, y1, x2, y2, x3, y3)
+    // triangle (x1, y1, x2, y2, x3, y3)
     drawTriangle(650, 90, 580, 210, 720, 210);
 
-    // 楕円 (x, y, w, h)
+    // ellipse (x, y, w, h)
     drawEllipse(840, 150, 50, 80);
 
-    // --- 塗り / 線だけ ---
+    // --- fill / outline only ---
 
-    // 塗りつぶし（デフォルト）
+    // filled (default)
     fill();
     setColor(1.0f, 1.0f, 1.0f);
     drawCircle(120, 370, 50);
 
-    // 輪郭だけ
+    // outline only
     noFill();
     drawCircle(260, 370, 50);
 
-    // 滑らかに描画
+    // smoother circle
     setCircleResolution(100);
     drawCircle(400, 370, 50);
     setCircleResolution(20); // default is 20
@@ -47,25 +47,25 @@ void tcApp::draw() {
     setStrokeWeight(1.0f);
     popStyle();
 
-    // --- 色の透明度 (alpha) ---
+    // --- color alpha (transparency) ---
     fill();
     setColor(1.0f, 0.3f, 0.3f, 0.7f);
     drawCircle(550, 370, 60);
     setColor(0.3f, 0.3f, 1.0f, 0.7f);
     drawCircle(590, 370, 60);
 
-    // --- 角丸四角形 ---
+    // --- rounded rectangle ---
     setColor(0.6f, 0.9f, 0.7f);
     drawRectRounded(720, 320, 140, 100, 20);
 
     // =========================================================
-    // チャレンジ:
-    //   上のサンプルを参考に、画面の下半分（y=450あたり）に
-    //   信号機を描いてみよう
-    //   - 横長の角丸四角形をベースに
-    //   - 赤・黄・緑の円を並べる
-    //   - 「青信号」だけ光ってる感じにしてみよう
-    //     (他の2つは暗め、緑だけ明るく＋alphaで光彩を足すとか)
+    // Challenge:
+    //   Using the examples above, try drawing a traffic light
+    //   in the bottom half of the screen (around y=450)
+    //   - Start with a wide rounded rectangle as the base
+    //   - Line up red, yellow, and green circles
+    //   - Make only the "green" light look like it's glowing
+    //     (dim the other two, make green bright + add alpha glow)
     // =========================================================
 }
 

@@ -12,30 +12,30 @@ void tcApp::draw() {
     clear(0.12f);
 
     // --- drawLine vs drawStroke ---
-    // drawLine は 1px 固定。strokeWeight は効かない
+    // drawLine is always 1px. strokeWeight has no effect on it.
     setColor(0.5f, 0.5f, 0.5f);
     setStrokeWeight(20.0f);
     drawLine(60, 60, 300, 60);
 
-    // drawStroke は strokeWeight が効く太い線
+    // drawStroke respects strokeWeight for thick lines
     setColor(1.0f, 0.7f, 0.2f);
     drawStroke(60, 120, 300, 120);
 
-    // --- StrokeCap の違い ---
-    // Butt: 端点でぴったり切れる
+    // --- StrokeCap types ---
+    // Butt: cuts off exactly at the endpoint
     setStrokeCap(StrokeCap::Butt);
     setColor(0.3f, 0.8f, 1.0f);
     drawStroke(60, 200, 250, 200);
 
-    // Round: 端点に半円がつく
+    // Round: adds a semicircle at each endpoint
     setStrokeCap(StrokeCap::Round);
     drawStroke(60, 250, 250, 250);
 
-    // Square: 半幅ぶん延長される
+    // Square: extends by half the stroke width
     setStrokeCap(StrokeCap::Square);
     drawStroke(60, 300, 250, 300);
 
-    // --- beginStroke / endStroke で自由なパス ---
+    // --- beginStroke / endStroke for freeform paths ---
     setColor(0.9f, 0.3f, 0.5f);
     setStrokeWeight(10.0f);
     setStrokeCap(StrokeCap::Round);
@@ -49,7 +49,7 @@ void tcApp::draw() {
     vertex(800, 80);
     endStroke();
 
-    // close = true で閉じたパス
+    // close = true to make a closed path
     setColor(0.4f, 0.9f, 0.6f);
     setStrokeWeight(10.0f);
     setStrokeJoin(StrokeJoin::Miter);
@@ -62,36 +62,36 @@ void tcApp::draw() {
     vertex(450, 400);
     endStroke(true);
 
-    // --- noFill の図形ストロークとの比較 ---
-    // noFill + drawCircle は均一な輪郭線
+    // --- comparing noFill shapes with strokes ---
+    // noFill + drawCircle gives a uniform outline
     setColor(1.0f, 1.0f, 1.0f);
     noFill();
     drawCircle(150, 470, 60);
 
-    // beginStroke + close で描く円は Cap/Join が効く
-    // TAU = 2π = 一周分の角度（TrussCでは PI じゃなく TAU を使う）
-    // TAU * 0.25 = 90°、TAU * 0.5 = 180°、TAU = 360° と覚えるとラク
+    // a circle drawn with beginStroke + close has Cap/Join effects
+    // TAU = 2pi = one full turn (TrussC uses TAU instead of PI)
+    // TAU * 0.25 = 90deg, TAU * 0.5 = 180deg, TAU = 360deg
     setColor(1.0f, 1.0f, 1.0f);
     setStrokeWeight(2.0f);
     int n = 40;
     beginStroke();
     for (int i = 0; i < n; i++) {
-        float angle = TAU * i / n; // 0 〜 TAU を n 分割
+        float angle = TAU * i / n; // divide 0..TAU into n parts
         vertex(400 + cos(angle) * 60, 470 + sin(angle) * 60);
     }
     endStroke(true);
 
     // =========================================================
-    // チャレンジ:
-    //   beginStroke を使って、手書き風の星（五芒星）を一筆書きで
-    //   描いてみよう
-    //   ヒント:
-    //   - 5つの頂点を「1つ飛ばし」で結ぶと星になる
-    //   - 円周上の点は cos/sin で出せる（上のサンプル参照）
-    //   - TAU * i / 5 で五角形の頂点、ここで i を 0,2,4,1,3 の
-    //     順に回すと一筆書きの星になる（つまり i*2 % 5）
-    //   - endStroke(true) で閉じる
-    //   - StrokeJoin::Round / Miter / Bevel で印象がかなり変わる
+    // Challenge:
+    //   Use beginStroke to draw a hand-drawn style star
+    //   (pentagram) in a single stroke
+    //   Hints:
+    //   - Connect 5 points by skipping one each time to make a star
+    //   - Points on a circle come from cos/sin (see example above)
+    //   - TAU * i / 5 gives pentagon vertices; visit them in order
+    //     0, 2, 4, 1, 3 for a single-stroke star (i.e. i*2 % 5)
+    //   - Use endStroke(true) to close the shape
+    //   - StrokeJoin::Round / Miter / Bevel changes the look a lot
     // =========================================================
 }
 

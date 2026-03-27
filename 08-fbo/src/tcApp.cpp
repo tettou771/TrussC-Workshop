@@ -2,15 +2,15 @@
 
 void tcApp::setup() {
     // --- Fbo = offscreen canvas ---
-    // allocate(w, h) で描画用テクスチャを作る
-    // begin() / end() の間に描いた内容がテクスチャになる
+    // allocate(w, h) creates a render texture
+    // everything drawn between begin() / end() goes into the texture
     int samples = 4;
     TextureFormat format = TextureFormat::RGBA32F;
     trailFbo.allocate(960, 600, samples, format);
     trailFbo.begin(0, 0, 0, 1);
     trailFbo.end();
 
-    // --- stamp: setup で一度だけ描いて、何度でも使えるパターン ---
+    // --- stamp: draw once in setup, reuse as many times as you want ---
     stampFbo.allocate(100, 100);
     stampFbo.begin(0, 0, 0, 0); // transparent background
     int n = 6;
@@ -58,14 +58,14 @@ void tcApp::draw() {
     drawBitmapString("[c] clear trail", 20, 580);
 
     // =========================================================
-    // チャレンジ:
-    //   クリックした場所に stampFbo をスタンプとして押してみよう
-    //   trailFbo の中に描けば、残像つきで残る！
+    // Challenge:
+    //   Stamp the stampFbo wherever you click!
+    //   Draw it inside trailFbo so it stays with the trail effect!
     //
-    //   ヒント
-    //   mousePressed() で trailFboをbegin,endで囲んで、stampFboを描く
+    //   Hint:
+    //   In mousePressed(), wrap stampFbo.draw() with trailFbo.begin/end
     //
-    //   スタンプが残像でゆっくり消えていく
+    //   The stamps will slowly fade away with the trail
     // =========================================================
 }
 

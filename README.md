@@ -1,69 +1,69 @@
 # TrussC Workshop
 
-これはTrussCのワークショップ用のサンプルコードです。
+This is sample code for the TrussC workshop.
 
-テーマごとにプロジェクトを分けていて、そのテーマの使い方とソースコードの後半の「チャレンジ」コーナーがあります。
+Each project covers a different topic, with usage examples and a "Challenge" section at the end of the source code.
 
-まずは実行してみて（VSCodeなどはF5キー）、どういうものか見てから tcApp.h, tcApp.cpp を見てみてください。なるほどね、と思ったらチャレンジのところを解いてみて欲しいです。
+Start by running the project (F5 in VSCode, etc.), see what it does, and then take a look at tcApp.h and tcApp.cpp. Once it clicks, try tackling the challenge!
 
-チャレンジには正答がないので、あなたが思った通りの挙動になったらOKです。
+There's no single correct answer for the challenges -- if it works the way you intended, you're good.
 
-## サンプルの種類
+## Samples
 
 ### 00-basicGraphics
 
-基本的な図形描画です。線を引いたり、多角形で囲ったりできます。
+Basic shape drawing. Lines, circles, rectangles, triangles, and more.
 
-### 01-drawShapse_vs_drawStroke
+### 01-drawShape_vs_drawStroke
 
-Processingでは太いstrokeにcapをつけて先端を丸くしたり、折れ線の角を切り落としたりできますよね。openFrameworksではできなくて不満だったので、ofxStrokeというアドオンを作っていました。
+In Processing, you can put caps on thick strokes to round the ends, or bevel the corners of polylines. openFrameworks couldn't do that, which was annoying, so I made an addon called ofxStroke.
 
-TrussCでは、そういう機能もインクルードしているのでグラフィカルな表現もちょっとはやりやすいと思います。
+TrussC has this built in, so expressive line drawing is a lot easier out of the box.
 
 ### 02-tween
 
-アニメーションするときに滑らかに加減速するサンプルです。
+Smooth acceleration and deceleration for animations.
 
-ただの四角形でも豆腐に見えたり、UIの気持ちよさが動きで表現できたり、結構重要な要素です。でも、tweenって結構外部のアドオンがないと難しいことが多いので、TrussCでは内蔵しました。
+Even a plain rectangle can look like wobbly tofu, or give your UI that satisfying snap -- motion matters a lot. Tweening usually requires an external addon, so TrussC includes it natively.
 
 ### 03-mouse_key
 
-マウスとキーイベントの取り方です。
+How to handle mouse and key events.
 
-簡単なのでさらっと見るだけでいいかもしれませんが、キー押しは大文字でハンドリングするところだけ注意点です。例えば if (key == 'C') という感じです。
+Pretty straightforward, so a quick skim should be enough. One thing to note: key events use uppercase letters. For example: `if (key == 'C')`.
 
 ### 04-transform
 
-座標を動かしたり回したりスケーリングするサンプルです。
+Translating, rotating, and scaling coordinates.
 
-pushMatrix(), popMatrix() みたいなメソッドはoF, Processingにもあるのでお馴染みかもしれません。
+If you've used oF or Processing, you're probably already familiar with pushMatrix() and popMatrix().
 
 ### 05-mathGenerative
 
-sin, cos, noise を使ったジェネラティブなグラフィックスのサンプルです。
+Generative graphics using sin, cos, and noise.
 
-波を描いたり、リサージュ曲線を描いたり、noise で有機的な動きを出したりします。クリエイティブコーディングの醍醐味はここですよね。
+Drawing waves, Lissajous curves, organic noise-driven motion -- this is the good stuff in creative coding.
 
 ### 06-imageTexture
 
-ピクセル単位で画像を操作するサンプルです。
+Pixel-level image manipulation.
 
-Image を allocate して、setColor でピクセルを書いて、update で GPU にアップロードして、draw で表示する。この流れがわかれば、プロシージャルなテクスチャ生成やリアルタイムな画像処理ができるようになります。
+Allocate an Image, write pixels with setColor, upload to the GPU with update, and display with draw. Once you've got this flow down, you can do procedural textures and real-time image processing.
 
 ### 07-nodeSystem
 
-RectNode を使った親子関係のサンプルです。
+Parent-child relationships using RectNode.
 
-addChild で親に子を追加すると、親が動けば子もついてくる。ローカル座標で描画されるので、UIのパネルやボタンを作るときに便利です。enableEvents() を呼べばマウスのホバーやクリックも取れます。
+Add a child to a parent with addChild, and when the parent moves, the children follow. Everything is drawn in local coordinates, which is great for building UI panels and buttons. Call enableEvents() to get mouse hover and click events.
 
 ### 08-fbo
 
-FBO（オフスクリーン描画）のサンプルです。
+FBO (offscreen rendering) sample.
 
-begin() / end() の間に描いたものがテクスチャになります。TextureFormatの指定の仕方がoFとかとは違うenumなので注意してください。
+Everything drawn between begin() and end() becomes a texture. Note that TextureFormat uses different enum values than oF -- keep that in mind.
 
 ### 09-sound
 
-beep() と ChipSound のサンプルです。
+beep() and ChipSound sample.
 
-beep() は組み込みのプリセットサウンドで、デバッグやUIのフィードバックに使えます。ChipSound は波形・周波数・長さを指定して自分でサウンドを作れる仕組みです。ファミコンっぽい効果音が簡単に作れます。
+beep() is a built-in preset sound, handy for debug feedback and UI sounds. ChipSound lets you build your own sounds by specifying waveform, frequency, and duration. Easy to make retro NES-style sound effects.

@@ -63,21 +63,21 @@ void tcApp::setup() {
     }
 
     // =========================================================
-    // チャレンジ:
-    //   新しいキー (A など) に、自分だけの ChipSound を作ろう！
+    // Challenge:
+    //   Create your own ChipSound on a new key (e.g. A)!
     //
-    //   ここに追加:
+    //   Add here:
     //     ChipSoundNote n;
-    //     n.wave = Wave::Triangle;  // 波形を選ぶ
-    //     n.hz = 440.0f;            // 音の高さ
-    //     n.duration = 0.2f;        // 長さ
-    //     n.volume = 0.3f;          // 音量
-    //     mySound = n.build();      // Sound にする
+    //     n.wave = Wave::Triangle;  // pick a waveform
+    //     n.hz = 440.0f;            // pitch
+    //     n.duration = 0.2f;        // length
+    //     n.volume = 0.3f;          // volume
+    //     mySound = n.build();      // turn it into a Sound
     //
-    //   keyPressed() に追加:
+    //   Add to keyPressed():
     //     case 'A': mySound.play(); break;
     //
-    //   tcApp.h にも Sound mySound; を追加するのを忘れずに
+    //   Don't forget to add Sound mySound; in tcApp.h too!
     // =========================================================
 }
 

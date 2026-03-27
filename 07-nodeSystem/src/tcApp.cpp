@@ -73,17 +73,17 @@ void tcApp::draw() {
     drawBitmapString("Move panel with arrow keys -> boxes follow!", 20, 80);
 
     // =========================================================
-    // チャレンジ:
-    //   box の下に、もう1段 子ボックスを追加してみよう
-    //   - 新しい ClickBox を作る
-    //   - box1->addChild(newBox) で box1 の子にする
-    //   - setPos は box1 の中でのローカル座標
-    //   - box1 が動けば newBox もついてくる
+    // Challenge:
+    //   Add another level of child boxes below the existing ones!
+    //   - Create a new ClickBox
+    //   - box1->addChild(newBox) to make it a child of box1
+    //   - setPos uses local coords within box1
+    //   - When box1 moves, newBox follows along
     //
-    //   さらに: 2つ目のパネルを作ってみよう
+    //   Bonus: try creating a second panel!
     //   - panel2 = make_shared<RectNode>()
-    //   - addChild(panel2) で app に追加
-    //   - 別の位置に新しいボックスを配置
+    //   - addChild(panel2) to add it to the app
+    //   - Place new boxes at a different position
     // =========================================================
 
     setColor(0.4f);

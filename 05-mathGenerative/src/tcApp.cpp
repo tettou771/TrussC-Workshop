@@ -87,17 +87,17 @@ void tcApp::draw() {
     }
 
     // =========================================================
-    // チャレンジ:
-    //   noise を使ってパーティクルのフローフィールドを作ってみよう
-    //   1. tcApp.h で vector<Vec2> particles を用意して、ランダムな位置で初期化
-    //   2. update() で各パーティクルの位置から noise で角度を取得:
+    // Challenge:
+    //   Build a particle flow field using noise!
+    //   1. In tcApp.h, add vector<Vec2> particles and init with random positions
+    //   2. In update(), get an angle from noise for each particle:
     //      float angle = noise(p.x * 0.005, p.y * 0.005, time) * TAU;
-    //   3. その角度方向に少し移動:
+    //   3. Move each particle slightly in that direction:
     //      p.x += cos(angle) * 2;  p.y += sin(angle) * 2;
-    //   4. draw() で小さい点として描画
-    //   5. 画面外に出たらランダムにリセット
+    //   4. In draw(), render them as small dots
+    //   5. Reset to a random position when they go off screen
     //
-    //   noiseField2dExample も参考に！
+    //   Check out noiseField2dExample for reference!
     // =========================================================
 
     setColor(0.4f);

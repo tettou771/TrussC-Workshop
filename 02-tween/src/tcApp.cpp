@@ -15,8 +15,8 @@ void tcApp::draw() {
 
     int n = 200; // arc vertex count
 
-    // --- コイン反転 (Back) ---
-    // 上が白、下がグレーの円。スペースで TAU/2 回転して反転する
+    // --- coin flip (Back) ---
+    // circle with white top and gray bottom. Press space to flip by TAU/2
     {
         float angle = flipTween.getValue();
         float cx = 160, cy = 170, r = 50;
@@ -46,8 +46,8 @@ void tcApp::draw() {
         popStyle();
     }
 
-    // --- メーター (Quint) ---
-    // 何もないところから弧がぐるっと閉じて円になる
+    // --- meter (Quint) ---
+    // an arc grows from nothing and wraps around to form a full circle
     {
         float maxTheta = meterTween.getValue();
         float cx = 480, cy = 170, r = 50;
@@ -70,9 +70,9 @@ void tcApp::draw() {
         }
     }
 
-    // --- 豆腐 (Elastic) ---
-    // 縦長の長方形が正方形に変形する。面積・底辺y・重心xは変わらない
-    // Elastic のびよんびよんで豆腐っぽく揺れる
+    // --- tofu (Elastic) ---
+    // a tall rectangle morphs into a square. Area, bottom-y, and center-x stay the same.
+    // the Elastic easing makes it wobble like jelly
     {
         float t = tofuTween.getValue();
         float cx = 800;
@@ -89,14 +89,14 @@ void tcApp::draw() {
     }
 
     // =========================================================
-    // チャレンジ:
-    //   下の2つの角丸四角形は EaseType::Linear で動いている
-    //   好きなイージングに変えて、UIの切り替えっぽい
-    //   気持ちいい動きにしてみよう
+    // Challenge:
+    //   The two rounded rectangles below use EaseType::Linear.
+    //   Change them to a different easing to make the motion
+    //   feel like a slick UI transition!
     //
-    //   keyPressed() の challengeT の行を見つけて
-    //   EaseType::Linear を変えるだけ！
-    //   例: Cubic, Back, Elastic, Bounce, Quint ...
+    //   Find the challengeT lines in keyPressed() and
+    //   just swap EaseType::Linear for something else!
+    //   e.g.: Cubic, Back, Elastic, Bounce, Quint ...
     // =========================================================
     {
         float t = challengeT.getValue();
@@ -143,7 +143,7 @@ void tcApp::keyPressed(int key) {
             tofuTween.from(0).to(1)
                 .duration(1.0f).ease(EaseType::Elastic, EaseMode::Out).start();
 
-            // ↓ チャレンジ: この EaseType::Linear, InOut を変えてみよう！
+            // ↓ Challenge: try changing EaseType::Linear, InOut to something else!
             challengeT.from(0).to(1)
                 .duration(0.8f).ease(EaseType::Linear, EaseMode::InOut).start();
         } else {
@@ -154,7 +154,7 @@ void tcApp::keyPressed(int key) {
             tofuTween.from(1).to(0)
                 .duration(1.0f).ease(EaseType::Elastic, EaseMode::Out).start();
 
-            // ↓ こっちも同じイージングに変えよう
+            // ↓ change this one to the same easing too
             challengeT.from(1).to(0)
                 .duration(0.8f).ease(EaseType::Linear, EaseMode::InOut).start();
         }

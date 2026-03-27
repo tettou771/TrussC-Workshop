@@ -74,15 +74,15 @@ void tcApp::draw() {
     drawBitmapString("getColor(0,0)", 120, 488);
 
     // =========================================================
-    // チャレンジ:
-    //   setup() のパターンを変えてみよう！
-    //   今は横グラデーションになっている（hue = x / size）
+    // Challenge:
+    //   Change the pattern in setup()!
+    //   Right now it's a horizontal gradient (hue = x / size)
     //
-    //   アイデア:
-    //   - チェッカー: (x + y) % 2 == 0 で白黒
-    //   - 円: 中心からの距離で色を変える
+    //   Ideas:
+    //   - Checker: (x + y) % 2 == 0 for black & white
+    //   - Circle: color based on distance from center
     //     float d = sqrt((x-8)*(x-8) + (y-8)*(y-8));
-    //   - ドット絵: 好きな座標に好きな色を置いてみよう
+    //   - Pixel art: place whatever colors you want at specific coords
     //     patternImg.setColor(3, 2, Color(1, 0, 0));
     // =========================================================
 

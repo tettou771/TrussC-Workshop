@@ -136,16 +136,15 @@ void tcApp::draw() {
     }
 
     // =========================================================
-    // チャレンジ:
-    //   画面右下 (650, 420) あたりに、太陽系っぽいものを
-    //   描いてみよう
-    //   - translate で中心を移動
-    //   - 太陽を中心に描く
-    //   - pushMatrix → rotate(time * speed) → translate(距離, 0)
-    //     → 惑星を描く → popMatrix
-    //   - 惑星ごとに speed と距離を変えれば公転軌道になる
-    //   - 月: 惑星の push の中でさらに push → rotate → translate
-    //     → 小さい円 → pop すれば衛星になる！
+    // Challenge:
+    //   Draw a little solar system around (650, 420)!
+    //   - Use translate to move the origin to the center
+    //   - Draw the sun at the center
+    //   - pushMatrix -> rotate(time * speed) -> translate(dist, 0)
+    //     -> draw planet -> popMatrix
+    //   - Different speed and distance for each planet = orbits
+    //   - Moon: inside a planet's push, do another push -> rotate
+    //     -> translate -> small circle -> pop for a satellite!
     // =========================================================
 
     setColor(0.4f);
