@@ -71,7 +71,6 @@ void tcApp::draw() {
     // beginStroke + close で描く円は Cap/Join が効く
     // TAU = 2π = 一周分の角度（TrussCでは PI じゃなく TAU を使う）
     // TAU * 0.25 = 90°、TAU * 0.5 = 180°、TAU = 360° と覚えるとラク
-    fill();
     setColor(1.0f, 1.0f, 1.0f);
     setStrokeWeight(2.0f);
     int n = 40;
