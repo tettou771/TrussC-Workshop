@@ -26,19 +26,17 @@ void tcApp::draw() {
 
     // --- 塗り / 線だけ ---
 
-    // 塗りつぶし（デフォルト）
+    // 塗りつぶし（デフォルト）— 弧を塗ると扇形になる
     fill();
     setColor(1.0f, 1.0f, 1.0f);
-    drawCircle(120, 370, 50);
+    drawArc(120, 370, 50, 0.5f, TAU - 0.5f); // 右に口を開いた扇形（パックマン）
 
     // 輪郭だけ
     noFill();
     drawCircle(260, 370, 50);
 
-    // 滑らかに描画
-    setCircleResolution(100);
-    drawCircle(400, 370, 50);
-    setCircleResolution(20); // default is 20
+    // 弧（drawArc）— noFill なら弧の線だけ。角度は radian
+    drawArc(400, 370, 50, 0, HALF_TAU); // 半円の弧
 
     // push/pop style
     pushStyle();
