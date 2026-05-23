@@ -35,6 +35,6 @@ public:
     Color brushColor = Color(1.0f, 0.5f, 0.2f);
     float brushSize = 8.0f;
 
-    Vec2 mousePos;
+    Vec2 mousePos{-100, -100};   // start off-screen so the cursor preview doesn't show at (0,0)
     bool mouseDown = false;
 };
