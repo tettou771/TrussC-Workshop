@@ -39,7 +39,7 @@ void tcApp::draw() {
     drawRectRounded(720, 65, 90, 90, 16);       // 角丸: 半径を 5 つ目の引数で
 
     setColor(0.45f);
-    drawBitmapString("(1) basic shapes  — fill is the default", 30, 45);
+    drawBitmapString("(1) basic shapes  -  fill is the default", 30, 45);
 
     // =========================================================
     // (2) fill / noFill / alpha — 同じ図形を別の見た目で
@@ -104,7 +104,7 @@ void tcApp::draw() {
     // (4) beginStroke — 連続した頂点で自由なパス
     // =========================================================
     setColor(0.45f);
-    drawBitmapString("(4) beginStroke / vertex / endStroke  — ★ try changing values below", 30, 470);
+    drawBitmapString("(4) beginStroke / vertex / endStroke    * try changing values below", 30, 470);
 
     // ジグザグ (角の形 = StrokeJoin::Round で丸まる)
     pushStyle();
@@ -139,7 +139,7 @@ void tcApp::draw() {
 
     // ラベル: stroke 版
     setColor(0.45f);
-    drawBitmapString("beginStroke", 446, 500);
+    drawBitmapString("beginStroke", 446, 492);
 
     // 比較用 fill 版 (同じ頂点でも fill だと中身が塗りつぶされる)
     pushStyle();
@@ -154,7 +154,7 @@ void tcApp::draw() {
     popStyle();
 
     setColor(0.45f);
-    drawBitmapString("beginShape (fill)", 580, 500);
+    drawBitmapString("beginShape (fill)", 580, 492);
 
     // =========================================================
     // CHALLENGE (軽め):
