@@ -1,25 +1,16 @@
 #include "tcApp.h"
 
-// TC_HOT_RELOAD をコメントアウトすると、ホットリロードが無効化されます
-// 複雑なコードで問題が起きる時場合や、release buildする場合は無効化推奨です
+// TC_HOT_RELOAD をコメントアウトすると、 ホットリロードが無効化されます
 TC_HOT_RELOAD(tcApp)
 
 void tcApp::setup() {
-    // --- RectNode: UI building block ---
-    // RectNode = rectangle with position, size, rotation
-    // addChild() creates parent-child relationship
-    // Children use LOCAL coordinates (0,0 = parent's top-left)
-    // When parent moves, children follow automatically
-
-    // --- panel (parent) ---
-    panel = make_shared<RectNode>();
-    panel->enableEvents();
+    // --- Panel を作って app の子にする ---
+    panel = make_shared<Panel>("Panel  (arrow keys to move)");
     panel->setPos(180, 120);
-    panel->setSize(600, 350);
     addChild(panel);
 
-    // --- boxes (children of panel) ---
-    // position is relative to panel, not to screen!
+    // --- ClickBox を 3 つ、 panel の子にする ---
+    // 座標は panel から見た「ローカル座標」。 panel が動くと box もついてくる。
     box1 = make_shared<ClickBox>(Color(0.5f, 0.2f, 0.2f));
     box1->setPos(30, 80);
     panel->addChild(box1);
@@ -39,72 +30,53 @@ void tcApp::update() {
 void tcApp::draw() {
     clear(0.12f);
 
-    // --- draw panel background ---
-    // Node children are drawn automatically by TrussC.
-    // But we draw the panel background here in the app's draw,
-    // because RectNode itself is invisible (just a container).
-    // The panel's draw could be overridden too, but for simplicity
-    // we draw it from the app using the panel's position/size.
-
-    // panel background
-    float px = panel->getPos().x;
-    float py = panel->getPos().y;
-    float pw = panel->getWidth();
-    float ph = panel->getHeight();
-
-    setColor(0.18f);
-    drawRectRounded(px, py, pw, ph, 12);
-    noFill();
-    setColor(0.3f);
-    drawRectRounded(px, py, pw, ph, 12);
-    fill();
-
-    // panel title
-    setColor(0.7f);
-    drawBitmapString("Panel", px + 20, py + 25);
-    setColor(0.4f);
-    drawBitmapString("arrow keys to move", px + 80, py + 25);
-
-    // box labels (drawn relative to panel for clarity)
-    setColor(0.5f);
-    drawBitmapString("click to toggle", px + 30, py + 170);
-
-    // --- info ---
+    // tcApp 自身の draw は背景クリアと「画面外の情報表示」 だけ。
+    // Panel と ClickBox は自分の draw() を持っているので、 ここで描く必要はない。
     setColor(0.6f);
-    drawBitmapString("RectNode Parent-Child Demo", 20, 30);
-    drawBitmapString("Panel position: (" + to_string((int)px) + ", " + to_string((int)py) + ")", 20, 50);
-    drawBitmapString("Boxes use LOCAL coords (relative to panel)", 20, 65);
-    drawBitmapString("Move panel with arrow keys -> boxes follow!", 20, 80);
+    drawBitmapString("Node System  —  one class per file (.h / .cpp)", 20, 30);
+
+    setColor(0.45f);
+    drawBitmapString("Panel:    Panel.h / Panel.cpp", 20, 55);
+    drawBitmapString("ClickBox: ClickBox.h / ClickBox.cpp", 20, 70);
+    drawBitmapString("tcApp:    tcApp.h / tcApp.cpp  (assemble & arrange only)", 20, 85);
+
+    Vec3 p = panel->getPos();
+    drawBitmapString("Panel position: (" + to_string((int)p.x) + ", " + to_string((int)p.y) + ")", 20, 115);
+
+    setColor(0.5f);
+    drawBitmapString("click each box to toggle    arrow keys move the whole panel", 20, 560);
 
     // =========================================================
     // チャレンジ:
-    //   box の下に、もう1段 子ボックスを追加してみよう
-    //   - 新しい ClickBox を作る
-    //   - box1->addChild(newBox) で box1 の子にする
-    //   - setPos は box1 の中でのローカル座標
-    //   - box1 が動けば newBox もついてくる
+    //   ★ 新しい class を作って Node ファミリーに加えてみよう
+    //   - 例: ClickBox を継承して「クリック数を表示する CounterBox」
+    //   - 例: 自分の振る舞いを持つ「RoundButton」 や「Slider」
     //
-    //   さらに: 2つ目のパネルを作ってみよう
-    //   - panel2 = make_shared<RectNode>()
-    //   - addChild(panel2) で app に追加
-    //   - 別の位置に新しいボックスを配置
+    //   手順:
+    //     1. src/Foo.h を作って class Foo : public RectNode を宣言
+    //     2. src/Foo.cpp を作って draw() / onMousePress() を実装
+    //     3. tcApp.h で #include "Foo.h"
+    //     4. tcApp::setup() で make_shared<Foo>() → panel->addChild(...)
+    //
+    //   CMakeLists は触らなくて OK (src/ の .cpp / .h は自動で拾われる)
+    //
+    //   小さくてもファイル分けるのが流儀。
+    //   「中身が 30 行しかないから 1 ファイルにまとめる」 をしないこと。
+    //   class が育った時に分け直すコストを払うより、 最初から分けておく。
     // =========================================================
-
-    setColor(0.4f);
-    drawBitmapString("RectNode: enableEvents / addChild / local coords / hover & click", 20, 580);
 }
 
 void tcApp::keyPressed(int key) {
-    // move panel with arrow keys
+    // panel を矢印キーで動かす。 子の box は自動的についてくる。
+    Vec3 p = panel->getPos();
     float step = 10;
-    float px = panel->getPos().x;
-    float py = panel->getPos().y;
-    if (key == SAPP_KEYCODE_LEFT)  px -= step;
-    if (key == SAPP_KEYCODE_RIGHT) px += step;
-    if (key == SAPP_KEYCODE_UP)    py -= step;
-    if (key == SAPP_KEYCODE_DOWN)  py += step;
-    panel->setPos(px, py);
+    if (key == SAPP_KEYCODE_LEFT)  p.x -= step;
+    if (key == SAPP_KEYCODE_RIGHT) p.x += step;
+    if (key == SAPP_KEYCODE_UP)    p.y -= step;
+    if (key == SAPP_KEYCODE_DOWN)  p.y += step;
+    panel->setPos(p);
 }
+
 void tcApp::keyReleased(int key) {}
 
 void tcApp::mousePressed(Vec2 pos, int button) {}
