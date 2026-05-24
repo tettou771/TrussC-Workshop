@@ -6,7 +6,7 @@ TC_HOT_RELOAD(tcApp)
 void tcApp::setup() {
     // --- Panel を作って app の子にする ---
     panel = make_shared<Panel>("Panel  (arrow keys to move)");
-    panel->setPos(180, 120);
+    panel->setPos(180, 150);
     addChild(panel);
 
     // --- ClickBox を 3 つ、 panel の子にする ---
@@ -68,23 +68,34 @@ void tcApp::draw() {
 }
 
 void tcApp::keyPressed(int key) {
-    bool shift = isKeyPressed(SAPP_KEYCODE_LEFT_SHIFT)
-              || isKeyPressed(SAPP_KEYCODE_RIGHT_SHIFT);
-
-    if (shift) {
+    if (isShiftPressed()) {
         // SHIFT + 矢印: 回転 (L/R) と スケール (U/D)
-        if (key == SAPP_KEYCODE_LEFT)  panel->setRot(panel->getRot() - TAU / 20);
-        if (key == SAPP_KEYCODE_RIGHT) panel->setRot(panel->getRot() + TAU / 20);
-        if (key == SAPP_KEYCODE_UP)    panel->setScale(panel->getScaleX() + 0.1f);
-        if (key == SAPP_KEYCODE_DOWN)  panel->setScale(max(0.1f, panel->getScaleX() - 0.1f));
+        // switch 文 = 「同じ変数を多分岐で比べる」 時のお決まりイディオム
+        // break を忘れると下のケースに突き抜けるので注意
+        switch (key) {
+            case KEY_LEFT:
+                panel->setRot(panel->getRot() - TAU / 20);
+                break;
+            case KEY_RIGHT:
+                panel->setRot(panel->getRot() + TAU / 20);
+                break;
+            case KEY_UP:
+                panel->setScale(panel->getScaleX() + 0.1f);
+                break;
+            case KEY_DOWN:
+                panel->setScale(max(0.1f, panel->getScaleX() - 0.1f));
+                break;
+        }
     } else {
         // 矢印のみ: 移動 (子の box は自動的についてくる)
         Vec3 p = panel->getPos();
         float step = 10;
-        if (key == SAPP_KEYCODE_LEFT)  p.x -= step;
-        if (key == SAPP_KEYCODE_RIGHT) p.x += step;
-        if (key == SAPP_KEYCODE_UP)    p.y -= step;
-        if (key == SAPP_KEYCODE_DOWN)  p.y += step;
+        switch (key) {
+            case KEY_LEFT:  p.x -= step; break;
+            case KEY_RIGHT: p.x += step; break;
+            case KEY_UP:    p.y -= step; break;
+            case KEY_DOWN:  p.y += step; break;
+        }
         panel->setPos(p);
     }
 }
