@@ -18,97 +18,104 @@ void tcApp::draw() {
     // =========================================================
     // (1) 基本図形 — 引数の並び順をひとつずつ確認
     // =========================================================
+    setColor(0.45f);
+    drawBitmapString("(1) basic shapes  -  fill is the default", 30, 25);
+
     fill();
 
     setColor(0.3f, 0.7f, 1.0f);
-    drawCircle(80, 110, 45);                    // (x, y, r)
+    drawCircle(80, 95, 40);                     // (x, y, r)
 
     setColor(0.95f, 0.55f, 0.3f);
-    drawRect(160, 65, 90, 90);                  // (x, y, w, h)
+    drawRect(160, 55, 80, 80);                  // (x, y, w, h)
 
+    // drawRectには角丸のバリエーションがあります
+    //drawRectRounded(160, 55, 80, 80, 14);       // 角丸: 半径を 5 つ目の引数で
+    //drawRectSquircle(160, 55, 80, 80, 14);       // 滑らかな角丸
+
+    // 細い線 （とても軽いので大量に描ける）
     setColor(0.7f, 0.9f, 0.4f);
     setStrokeWeight(3.0f);
-    drawLine(280, 70, 380, 150);                // (x1, y1, x2, y2)
+    drawLine(270, 60, 360, 135);                // (x1, y1, x2, y2)
 
+    // 三角形
     setColor(0.95f, 0.4f, 0.65f);
-    drawTriangle(440, 65, 400, 155, 480, 155);  // (x1,y1, x2,y2, x3,y3)
+    drawTriangle(420, 55, 390, 135, 460, 135);  // (x1,y1, x2,y2, x3,y3)
 
-    setColor(0.55f, 0.7f, 0.95f);
-    drawEllipse(550, 110, 50, 80);              // (x, y, w, h)
-
+    // 弧(パックマンみたいなやつ)
     setColor(1.0f, 0.9f, 0.4f);
-    drawArc(650, 110, 45, 0.5f, TAU - 0.5f);    // 弧 → fill すると扇形 (パックマン)
-
-    setColor(0.65f, 0.9f, 0.7f);
-    drawRectRounded(720, 65, 90, 90, 16);       // 角丸: 半径を 5 つ目の引数で
-
-    setColor(0.45f);
-    drawBitmapString("(1) basic shapes  -  fill is the default", 30, 45);
+    drawArc(540, 95, 40, 0.5f, TAU - 0.5f);     // 弧 → fill すると扇形 (パックマン)
 
     // =========================================================
     // (2) fill / noFill / alpha — 同じ図形を別の見た目で
     // =========================================================
     setColor(0.45f);
-    drawBitmapString("(2) fill / noFill / alpha", 30, 200);
+    drawBitmapString("(2) fill / noFill / alpha", 30, 175);
 
     fill();
     setColor(1.0f, 0.7f, 0.6f);
-    drawCircle(80, 270, 40);
+    drawCircle(80, 240, 38);
 
-    noFill();                                    // ここから先は輪郭だけ
+    noFill();                                    // 線で描画（塗りつぶしなし）
     setStrokeWeight(2.0f);
     setColor(1.0f);
-    drawCircle(180, 270, 40);
+    drawCircle(175, 240, 38);
 
     fill();                                      // fill に戻す
-    setColor(1.0f, 0.3f, 0.3f, 0.55f);          // 4 つめが alpha
-    drawCircle(310, 270, 45);
-    setColor(0.3f, 0.6f, 1.0f, 0.55f);
-    drawCircle(360, 270, 45);
-    setColor(0.4f, 1.0f, 0.4f, 0.55f);
-    drawCircle(335, 305, 45);
+    setColor(1.0f, 0.3f, 0.3f, 0.55f);          // 赤、4つめが alpha
+    drawCircle(295, 240, 42);
+    setColor(0.3f, 0.6f, 1.0f, 0.55f);          // 青、4つめが alpha
+    drawCircle(340, 240, 42);
 
-    // pushStyle で「いま設定」を一時保存
+    // pushStyle で一時的な設定に入る
     pushStyle();
     noFill();
     setStrokeWeight(4.0f);
     setColor(1.0f, 0.9f, 0.4f);
-    drawRectRounded(460, 235, 90, 75, 14);
-    popStyle();                                  // 復元 (この後は fill のまま)
+    drawRectRounded(440, 207, 85, 70, 13);
+    popStyle(); // 一時的な設定を抜ける
 
     // =========================================================
     // (3) drawStroke — 太い線。端の形 (Cap) が選べる
+    //     縦に並べて長さ比較しやすく
     // =========================================================
     setColor(0.45f);
-    drawBitmapString("(3) drawStroke  +  StrokeCap (Butt / Round / Square)", 30, 360);
+    drawBitmapString("(3) drawStroke  +  StrokeCap (compare lengths)", 30, 320);
 
     pushStyle();
     setStrokeWeight(18.0f);
 
     setStrokeCap(StrokeCap::Butt);
     setColor(0.5f, 0.7f, 0.95f);
-    drawStroke(30, 405, 220, 405);
+    drawStroke(80, 355, 280, 355);
     setColor(0.5f);
-    drawBitmapString("Butt", 230, 410);
+    drawBitmapString("Butt", 300, 360);
 
     setStrokeCap(StrokeCap::Round);
     setColor(1.0f, 0.8f, 0.4f);
-    drawStroke(310, 405, 500, 405);
+    drawStroke(80, 400, 280, 400);
     setColor(0.5f);
-    drawBitmapString("Round", 510, 410);
+    drawBitmapString("Round", 300, 405);
 
     setStrokeCap(StrokeCap::Square);
     setColor(0.95f, 0.45f, 0.7f);
-    drawStroke(580, 405, 770, 405);
+    drawStroke(80, 445, 280, 445);
     setColor(0.5f);
-    drawBitmapString("Square", 780, 410);
+    drawBitmapString("Square", 300, 450);
+
+    // 補助線 (端の位置を可視化したい時はコメント解除)
+    // setColor(0.f);
+    // drawLine(80, 355, 280, 355);
+    // drawLine(80, 400, 280, 400);
+    // drawLine(80, 445, 280, 445);
+
     popStyle();
 
     // =========================================================
     // (4) beginStroke — 連続した頂点で自由なパス
     // =========================================================
     setColor(0.45f);
-    drawBitmapString("(4) beginStroke / vertex / endStroke    * try changing values below", 30, 470);
+    drawBitmapString("(4) beginStroke / vertex / endStroke", 30, 490);
 
     // ジグザグ (角の形 = StrokeJoin::Round で丸まる)
     pushStyle();
@@ -117,55 +124,62 @@ void tcApp::draw() {
     setStrokeJoin(StrokeJoin::Round);
     setColor(0.4f, 0.9f, 0.75f);
     beginStroke();
-    vertex(40, 540);
-    vertex(110, 510);
-    vertex(180, 560);
-    vertex(250, 510);
-    vertex(320, 560);
+    vertex(40, 555);
+    vertex(120, 525);
+    vertex(200, 575);
+    vertex(280, 525);
+    vertex(360, 575);
+    vertex(440, 525);
+    vertex(520, 575);
     endStroke();
     popStyle();
 
-    // 多角形
+    // =========================================================
+    // CHALLENGE — 右側の大きな図形をいじってみよう
+    // =========================================================
+    setColor(0.7f, 0.7f, 0.4f);
+    drawBitmapString("CHALLENGE  -  try changing the values below", 620, 25);
+
+    // ---- 五芒星 (beginStroke / 線) ----
     pushStyle();
-    setStrokeWeight(8.0f);          // ← 太さを変えてみよう (1 〜 30)
+    setStrokeWeight(10.0f);             // ← 太さを変えてみよう (1 〜 30)
     setStrokeCap(StrokeCap::Round);
-    setStrokeJoin(StrokeJoin::Miter); // ← Round / Bevel / Miter 切り替え
-    setColor(0.95f, 0.7f, 0.4f);    // ← 色を変えてみよう
-    int n = 5;                       // ← 角の数。 3=三角, 4=四角, 6=六角...
-    float cx = 480, cy = 535, r = 35;
+    setStrokeJoin(StrokeJoin::Miter);  // ← Round / Bevel / Miter 切り替え
+    setColor(0.95f, 0.7f, 0.4f);       // ← 色を変えてみよう
+    int n = 5;                          // ← 角の数。 3=三角, 4=四角, 6=六角...
+    float cx = 780, cy = 175, r = 100;
     beginStroke();
     for (int i = 0; i < n; i++) {
-        float a = TAU * i / n;
-        vertex(cx + sin(a) * r, cy + cos(a) * r);
+        float a = 2 * TAU * i / n;     // ← "2 *" を消すと普通の五角形に
+        vertex(cx + sin(a) * r, cy - cos(a) * r);
     }
-    endStroke(true);                 // true = 閉じる
+    endStroke(true);                    // true = 閉じる
     popStyle();
 
-    // stroke 版
-    setColor(0.45f);
-    drawBitmapString("beginStroke", 446, 492);
+    setColor(0.5f);
+    drawBitmapString("beginStroke  (line, closed)", 660, 305);
 
-    // 比較用 fill 版 (同じ頂点でも fill だと中身が塗りつぶされる)
+    // ---- 五角形 (beginShape / fill 版) ----
     pushStyle();
     fill();
     setColor(0.4f, 0.6f, 0.95f);
+    cx = 780; cy = 440; r = 100;
     beginShape();
     for (int i = 0; i < n; i++) {
-        float a = TAU * i / n - TAU * 0.25f;
-        vertex(620 + cos(a) * r, cy + sin(a) * r);
+        float a = TAU * i / n; // 1周回って頂点を描画
+        vertex(cx + sin(a) * r, cy - cos(a) * r);
     }
     endShape();
     popStyle();
 
-    setColor(0.45f);
-    drawBitmapString("beginShape (fill)", 580, 492);
+    setColor(0.5f);
+    drawBitmapString("beginShape  (fill)", 690, 570);
 
     // =========================================================
-    // CHALLENGE (軽め):
-    //   (4) の多角形を変えてみよう
-    //   - StrokeWeight, StrokeJoin, 色, n (角の数) を変えるだけ
-    //   - 試行錯誤して気に入った形を作ってみる
-    //   ヒント: n を増やすと円に近づく。 r を変えると大きさが変わる
+    // CHALLENGE のヒント:
+    //   - StrokeWeight, StrokeJoin, 色, n (角の数) を変えるだけで雰囲気が変わる
+    //   - n を増やすと円に近づく。 r を変えると大きさが変わる
+    //   - 五芒星の "2 *" を消すと普通の五角形になる (n=5 で飛ばし描きが星型を作る)
     // =========================================================
 }
 
