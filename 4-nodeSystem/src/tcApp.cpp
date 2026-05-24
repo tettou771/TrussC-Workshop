@@ -44,7 +44,8 @@ void tcApp::draw() {
     drawBitmapString("Panel position: (" + to_string((int)p.x) + ", " + to_string((int)p.y) + ")", 20, 115);
 
     setColor(0.5f);
-    drawBitmapString("click each box to toggle    arrow keys move the whole panel", 20, 560);
+    drawBitmapString("click each box to toggle", 20, 540);
+    drawBitmapString("arrow keys: move    SHIFT + L/R: rotate    SHIFT + U/D: scale", 20, 560);
 
     // =========================================================
     // チャレンジ:
@@ -67,14 +68,25 @@ void tcApp::draw() {
 }
 
 void tcApp::keyPressed(int key) {
-    // panel を矢印キーで動かす。 子の box は自動的についてくる。
-    Vec3 p = panel->getPos();
-    float step = 10;
-    if (key == SAPP_KEYCODE_LEFT)  p.x -= step;
-    if (key == SAPP_KEYCODE_RIGHT) p.x += step;
-    if (key == SAPP_KEYCODE_UP)    p.y -= step;
-    if (key == SAPP_KEYCODE_DOWN)  p.y += step;
-    panel->setPos(p);
+    bool shift = isKeyPressed(SAPP_KEYCODE_LEFT_SHIFT)
+              || isKeyPressed(SAPP_KEYCODE_RIGHT_SHIFT);
+
+    if (shift) {
+        // SHIFT + 矢印: 回転 (L/R) と スケール (U/D)
+        if (key == SAPP_KEYCODE_LEFT)  panel->setRot(panel->getRot() - TAU / 20);
+        if (key == SAPP_KEYCODE_RIGHT) panel->setRot(panel->getRot() + TAU / 20);
+        if (key == SAPP_KEYCODE_UP)    panel->setScale(panel->getScaleX() + 0.1f);
+        if (key == SAPP_KEYCODE_DOWN)  panel->setScale(max(0.1f, panel->getScaleX() - 0.1f));
+    } else {
+        // 矢印のみ: 移動 (子の box は自動的についてくる)
+        Vec3 p = panel->getPos();
+        float step = 10;
+        if (key == SAPP_KEYCODE_LEFT)  p.x -= step;
+        if (key == SAPP_KEYCODE_RIGHT) p.x += step;
+        if (key == SAPP_KEYCODE_UP)    p.y -= step;
+        if (key == SAPP_KEYCODE_DOWN)  p.y += step;
+        panel->setPos(p);
+    }
 }
 
 void tcApp::keyReleased(int key) {}
