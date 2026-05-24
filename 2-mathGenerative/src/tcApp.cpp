@@ -1,4 +1,9 @@
 #include "tcApp.h"
+#include "TrussC.h"
+
+// TC_HOT_RELOAD をコメントアウトすると、ホットリロードが無効化されます
+// 複雑なコードで問題が起きる時場合や、release buildする場合は無効化推奨です
+TC_HOT_RELOAD(tcApp)
 
 void tcApp::setup() {
 }
@@ -11,97 +16,172 @@ void tcApp::draw() {
     clear(0.12f);
 
     // --- sin wave ---
-    // sin() returns -1 to 1. Use it to make smooth oscillation.
+    // sin() は -1〜1 を返す。 これで滑らかな波を作る
     {
+        // pushMatrix()を使うと、座標系を変更できる.
+        // ここでは、(30, 100)の位置に座標系を移動している.
+        pushMatrix();
+        translate(30, 100);
+
         setColor(0.3f, 0.7f, 1.0f);
         setStrokeWeight(2.0f);
         beginStroke();
         for (int i = 0; i < 300; i++) {
-            float x = 30 + i;
-            float y = 100 + sin(i * 0.03f + time * 2.0f) * 40.0f;
-            vertex(x, y);
+            Vec2 p;
+            p.x = i;
+            p.y = sin(i * 0.03f + time * 2.0f) * 40.0f;
+            vertex(p);
         }
         endStroke();
+
+        popMatrix();
     }
 
     // --- Lissajous curve ---
-    // x = cos(a*t), y = sin(b*t) with different a,b makes beautiful curves
+    // x = cos(a*t), y = sin(b*t)  a と b の整数比で模様が決まる
     {
-        float cx = 520, cy = 100, r = 60;
+        pushMatrix();
+        translate(520, 100);
+
         setColor(1.0f, 0.5f, 0.8f);
         setStrokeWeight(1.5f);
         beginStroke();
-        int n = 300;
-        for (int i = 0; i <= n; i++) {
-            float t = TAU * i / n;
-            float x = cx + cos(3 * t + time) * r;
-            float y = cy + sin(2 * t) * r;
-            vertex(x, y);
+        int N = 300;
+        float r = 60;
+        for (int i = 0; i <= N; i++) {
+            float t = TAU * i / N;
+            Vec2 p;
+            p.x = cos(3 * t + time) * r;
+            p.y = sin(2 * t) * r;
+            vertex(p);
         }
         endStroke();
+
+        popMatrix();
+    }
+
+    // --- orbit on orbit ---
+    // 2つの円の合成。 s1 と s2 の比でいろんな軌道が出てくる
+    {
+        pushMatrix();
+        translate(750, 100);
+
+        // 全体の回転は rotate でも可能。
+        // translate が並行移動で、rotate が回転移動。
+        rotate(time * 0.1f);
+
+        // scaleをかけるとサイズ変更も可能
+        // scale(2.0); // 2倍サイズ
+
+        setColor(0.95f, 0.75f, 0.4f);
+        setStrokeWeight(1.5f);
+        beginStroke();
+        float r1 = 40, r2 = 30;
+        float s1 = 1.0, s2 = 3.2;
+        for (int i = 0, N = 1000; i <= N; ++i) {
+            float t = TAU * 10 * i / N;
+            Vec2 p;
+            p.x = r1 * sin(s1 * t) + r2 * cos(s2 * t);
+            p.y = r1 * cos(s1 * t) + r2 * sin(s2 * t);
+            vertex(p);
+        }
+        endStroke();
+
+        popMatrix();
     }
 
     // --- noise landscape ---
-    // noise(x, y) returns smooth random 0-1
+    // noise(x, y) は滑らかな乱数 (0〜1) を返す
     {
+        pushMatrix();
+        translate(30, 320);
+
         setColor(0.4f, 0.9f, 0.5f);
         setStrokeWeight(2.0f);
         beginStroke();
         for (int i = 0; i < 400; i++) {
-            float x = 30 + i * 2.0f;
             float n = noise(i * 0.01f, time * 0.3f);
-            float y = 320 + n * 120.0f - 60.0f;
-            vertex(x, y);
+            Vec2 p;
+            p.x = i * 2.0f;
+            p.y = n * 120.0f - 60.0f;
+            vertex(p);
         }
         endStroke();
+
+        popMatrix();
     }
 
     // --- noise circles ---
-    // noise to wobble a circle's radius
+    // 半径を noise でゆらして、 にゅるにゅる動くアメーバ
     {
-        float cx = 200, cy = 480;
+        pushMatrix();
+        translate(200, 480);
+
         setColor(1.0f, 0.8f, 0.3f, 0.8f);
         setStrokeWeight(2.0f);
-        int n = 120;
+        int N = 120;
         beginStroke();
-        for (int i = 0; i <= n; i++) {
-            float angle = TAU * i / n;
-            float r = 50 + noise(cos(angle) * 2.0f + 10, sin(angle) * 2.0f + 10, time * 0.5f) * 30.0f;
-            vertex(cx + cos(angle) * r, cy + sin(angle) * r);
+        for (int i = 0; i <= N; i++) {
+            float angle = TAU * i / N;
+            float r = 50 + noise(cos(angle) * 2.0f + 10,
+                                 sin(angle) * 2.0f + 10,
+                                 time * 0.5f) * 30.0f;
+            Vec2 p;
+            p.x = cos(angle) * r;
+            p.y = sin(angle) * r;
+            vertex(p);
         }
         endStroke(true);
+
+        popMatrix();
     }
 
     // --- random scatter (seeded) ---
-    // random value from seed - same seed = same pattern
+    // 固定 seed なら毎フレーム同じ模様
     {
-        srand(42); // fixed seed: same dots every frame
+        pushMatrix();
+        translate(500, 380);
+
+        srand(42); // 固定 seed: 同じ点が再現される
+        fill();
         for (int i = 0; i < 100; i++) {
-            float x = 500 + rand() % 400;
-            float y = 380 + rand() % 200;
+            Vec2 p;
+            p.x = rand() % 400;
+            p.y = rand() % 200;
             float sz = 1 + rand() % 4;
             float bri = 0.3f + (rand() % 70) / 100.0f;
             setColor(bri, bri, bri * 1.2f);
-            drawCircle(x, y, sz);
+            drawCircle(p.x, p.y, sz);
         }
+
+        popMatrix();
     }
 
     // =========================================================
-    // チャレンジ:
-    //   noise を使ってパーティクルのフローフィールドを作ってみよう
-    //   1. tcApp.h で vector<Vec2> particles を用意して、ランダムな位置で初期化
-    //   2. update() で各パーティクルの位置から noise で角度を取得:
-    //      float angle = noise(p.x * 0.005, p.y * 0.005, time) * TAU;
-    //   3. その角度方向に少し移動:
-    //      p.x += cos(angle) * 2;  p.y += sin(angle) * 2;
-    //   4. draw() で小さい点として描画
-    //   5. 画面外に出たらランダムにリセット
+    // チャレンジ (軽め、 好きなだけ): 数字を変えて遊ぶ
     //
-    //   noiseField2dExample も参考に！
+    //   Lissajous の「(3, 2)」を別の整数ペアに
+    //       (5, 4) / (7, 3) / (3, 5) / (5, 7) — 模様が劇的に変わる
+    //
+    //   orbit on orbit の s1, s2 を変える
+    //       (1.0, 3.2) を (2.0, 5.0) や (1.0, 2.5) に
+    //
+    //   noise landscape の noise(i * 0.01f, time * 0.3f) の 0.01
+    //       0.001 = なだらか / 0.1 = ガタガタ
+    //
+    //   noise circles の振れ幅 (* 30.0f)
+    //       0 で完璧な円、 200 にすると形が崩壊
+    //
+    //   sin wave に2つ目の波を足す
+    //       p.y = sin(i*0.03 + time*2) * 40
+    //            + sin(i*0.08 + time) * 20;
+    //
+    //   時間で動かす: 静的なやつに「+ time」を加えると動き出す
+    //       例えば noise circles の noise の引数の最後に + time * 1.0
     // =========================================================
 
     setColor(0.4f);
-    drawBitmapString("sin / Lissajous / noise / random", 20, 580);
+    drawBitmapString("sin / Lissajous / orbit / noise / random", 20, 580);
 }
 
 void tcApp::keyPressed(int key) {}

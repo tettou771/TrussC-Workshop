@@ -1,5 +1,9 @@
 #include "tcApp.h"
 
+// TC_HOT_RELOAD をコメントアウトすると、ホットリロードが無効化されます
+// 複雑なコードで問題が起きる時場合や、release buildする場合は無効化推奨です
+TC_HOT_RELOAD(tcApp)
+
 void tcApp::setup() {
 
 }
@@ -121,7 +125,7 @@ void tcApp::draw() {
     endStroke();
     popStyle();
 
-    // ★ あなたが遊ぶ場所: 多角形をひとつ
+    // 多角形
     pushStyle();
     setStrokeWeight(8.0f);          // ← 太さを変えてみよう (1 〜 30)
     setStrokeCap(StrokeCap::Round);
@@ -131,13 +135,13 @@ void tcApp::draw() {
     float cx = 480, cy = 535, r = 35;
     beginStroke();
     for (int i = 0; i < n; i++) {
-        float a = TAU * i / n - TAU * 0.25f;
-        vertex(cx + cos(a) * r, cy + sin(a) * r);
+        float a = TAU * i / n;
+        vertex(cx + sin(a) * r, cy + cos(a) * r);
     }
     endStroke(true);                 // true = 閉じる
     popStyle();
 
-    // ラベル: stroke 版
+    // stroke 版
     setColor(0.45f);
     drawBitmapString("beginStroke", 446, 492);
 
@@ -158,7 +162,7 @@ void tcApp::draw() {
 
     // =========================================================
     // CHALLENGE (軽め):
-    //   (4) の ★ 多角形をいじってみよう
+    //   (4) の多角形を変えてみよう
     //   - StrokeWeight, StrokeJoin, 色, n (角の数) を変えるだけ
     //   - 試行錯誤して気に入った形を作ってみる
     //   ヒント: n を増やすと円に近づく。 r を変えると大きさが変わる

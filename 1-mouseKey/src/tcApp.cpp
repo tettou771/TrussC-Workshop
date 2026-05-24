@@ -1,5 +1,9 @@
 #include "tcApp.h"
 
+// TC_HOT_RELOAD をコメントアウトすると、ホットリロードが無効化されます
+// 複雑なコードで問題が起きる時場合や、release buildする場合は無効化推奨です
+TC_HOT_RELOAD(tcApp)
+
 void tcApp::setup() {
 }
 
@@ -64,15 +68,32 @@ void tcApp::keyPressed(int key) {
         Color(1.0f, 0.3f, 0.5f),
         Color(1.0f, 1.0f, 1.0f),
     };
-    if (key >= '1' && key <= '5') brushColor = palette[key - '1'];
+    if (key >= '1' && key <= '5') {
+        brushColor = palette[key - '1'];
 
+        // ちょっとした音を鳴らすメソッド
+        beep(Beep::click);
+
+        // おまけ: 他の音の鳴らし方
+        // beep(Beep::error);
+        // beep(Beep::info);
+        // beep(Beep::warning);
+        // beep(Beep::error);
+        // beep(Beep::success);
+        // beep(Beep::click);
+        // beep(Beep::coin);
+    }
+    
     // --- brush size ---
     if (key == SAPP_KEYCODE_UP)   brushSize = min(brushSize + 2.0f, 50.0f);
     if (key == SAPP_KEYCODE_DOWN) brushSize = max(brushSize - 2.0f, 2.0f);
 
     // --- clear ---
     // TrussC では大文字でハンドリングします
-    if (key == 'C') trail.clear();
+    if (key == 'C') {
+        trail.clear();
+        beep(Beep::warning);
+    }
 }
 void tcApp::keyReleased(int key) {}
 
