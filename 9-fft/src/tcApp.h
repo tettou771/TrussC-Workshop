@@ -32,5 +32,6 @@ public:
     float bass = 0, mid = 0, high = 0;     // 3 帯域に集約した値 (smooth)
     float flash = 0;                        // バス hit 時に 1 → 減衰
 
+    Fbo scene;                              // 全部ここに描いて、 flash 時は subtract 合成
     float time = 0;
 };
