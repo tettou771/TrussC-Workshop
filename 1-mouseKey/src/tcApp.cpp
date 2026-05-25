@@ -78,15 +78,17 @@ void tcApp::keyPressed(int key) {
         // beep(Beep::error);
         // beep(Beep::info);
         // beep(Beep::warning);
-        // beep(Beep::error);
         // beep(Beep::success);
-        // beep(Beep::click);
         // beep(Beep::coin);
     }
-    
+
     // --- brush size ---
-    if (key == SAPP_KEYCODE_UP)   brushSize = min(brushSize + 2.0f, 50.0f);
-    if (key == SAPP_KEYCODE_DOWN) brushSize = max(brushSize - 2.0f, 2.0f);
+    if (key == SAPP_KEYCODE_UP) {
+        brushSize = min(brushSize + 2.0f, 50.0f);
+    }
+    if (key == SAPP_KEYCODE_DOWN) {
+        brushSize = max(brushSize - 2.0f, 2.0f);
+    }
 
     // --- clear ---
     // TrussC では大文字でハンドリングします

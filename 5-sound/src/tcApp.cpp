@@ -65,8 +65,10 @@ void tcApp::draw() {
     // --- 状態表示 ---
     setColor(0.5f);
     drawBitmapString("BGM:", 30, y);
-    setColor(musicLoaded ? colors::lime : colors::red);
-    drawBitmapString(musicLoaded ? "loaded (beat_loop.wav)" : "FAILED to load beat_loop.wav", 90, y);
+    if (musicLoaded) {
+        setColor(colors::lime);
+        drawBitmapString("loaded (beat_loop.wav)", 90, y);
+    }
     y += 22;
 
     if (musicLoaded) {
