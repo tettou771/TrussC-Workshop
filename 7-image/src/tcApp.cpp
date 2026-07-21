@@ -1,8 +1,5 @@
 #include "tcApp.h"
 
-// TC_HOT_RELOAD をコメントアウトすると、 ホットリロードが無効化されます
-TC_HOT_RELOAD(tcApp)
-
 void tcApp::setup() {
     // --- Image: pixel-level access ---
     // allocate(w, h, channels)  create blank image

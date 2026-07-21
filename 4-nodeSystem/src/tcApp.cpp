@@ -1,8 +1,5 @@
 #include "tcApp.h"
 
-// TC_HOT_RELOAD をコメントアウトすると、 ホットリロードが無効化されます
-TC_HOT_RELOAD(tcApp)
-
 void tcApp::setup() {
     // --- Panel を作って app の子にする ---
     panel = make_shared<Panel>("Panel  (arrow keys to move)");

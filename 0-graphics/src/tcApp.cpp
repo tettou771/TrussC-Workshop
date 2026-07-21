@@ -1,9 +1,5 @@
 #include "tcApp.h"
 
-// TC_HOT_RELOAD をコメントアウトすると、ホットリロードが無効化されます
-// 複雑なコードで問題が起きる時場合や、release buildする場合は無効化推奨です
-TC_HOT_RELOAD(tcApp)
-
 void tcApp::setup() {
 
 }

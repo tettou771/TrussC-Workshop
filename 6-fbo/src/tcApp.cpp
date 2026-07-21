@@ -1,8 +1,5 @@
 #include "tcApp.h"
 
-// TC_HOT_RELOAD をコメントアウトすると、 ホットリロードが無効化されます
-TC_HOT_RELOAD(tcApp)
-
 void tcApp::setup() {
     // --- Fbo = offscreen canvas ---
     // allocate(w, h) で描画用テクスチャを作る

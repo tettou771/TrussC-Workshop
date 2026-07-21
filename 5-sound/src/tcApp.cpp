@@ -12,9 +12,6 @@
 
 #include "tcApp.h"
 
-// TC_HOT_RELOAD をコメントアウトすると、ホットリロードが無効化されます
-TC_HOT_RELOAD(tcApp)
-
 void tcApp::setup() {
     // --- ChipSound: ファミコン風の旋律を組み立て ---
     // ChipSoundNote 1個 = 1音、 ChipSoundBundle で並べると旋律になる

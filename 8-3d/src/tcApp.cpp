@@ -1,8 +1,5 @@
 #include "tcApp.h"
 
-// TC_HOT_RELOAD をコメントアウトすると、 ホットリロードが無効化されます
-TC_HOT_RELOAD(tcApp)
-
 void tcApp::setup() {
     // TrussC は 3D が最初から有効。 pushMatrix → translate → rotateX/Y/Z → drawBox など、 だけで 3D に入れる。
 
